@@ -47,7 +47,7 @@ public class Encoder {
             queue.add(node);
         });
 
-        // create ch.fhnw.mada.tree from the queue (bottom up)
+        // create tree from the queue (bottom up)
         Node<HuffmanData> root = null;
         while (queue.size() > 1) {
             var l = queue.poll();

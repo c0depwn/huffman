@@ -105,7 +105,7 @@ public class Decoder {
                     var bit = (b >> i) & 1;
                     index += 1;
 
-                    // traverse ch.fhnw.mada.tree on each bit
+                    // traverse tree on each bit
                     var node = tree.step(bit);
                     if (node != null && node.isLeaf()) {
                         result.append(node.getData());
