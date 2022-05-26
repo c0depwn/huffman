@@ -126,7 +126,7 @@ public class EntryPoint {
     }
 
     private String padding(String value, int targetLength) {
-        if (value.length() == targetLength) {
+        if (value.length() == targetLength || value.length() > targetLength) {
             return value;
         }
         return String.format("%s%-" + (targetLength - value.length()) + "s", value, " ");
