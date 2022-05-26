@@ -25,10 +25,10 @@ decode -o <OUTPUT_FILE> -i <TEXT_INPUT_FILE> -t <TABLE_INPUT_FILE>
 
 ## Assignment & Running with Maven (mvn)
 
-Decode `output-mada.dat` using `dec_tab-mada.txt` and write result to `original.txt`.
+Decode `output-mada.dat` using `dec_tab-mada.txt` and write result to `decompress.txt`.
 
 ```shell
-mvn compile exec:java -Dexec.mainClass=ch.fhnw.mada.Main -Dexec.args="decode -o original.txt -i output-mada.dat -t dec_tab-mada.txt"
+mvn compile exec:java -Dexec.mainClass=ch.fhnw.mada.Main -Dexec.args="decode -o decompress.txt -i output-mada.dat -t dec_tab-mada.txt"
 ```
 
 Encode `original.txt` and write table to `table.txt` and compressed data to `data.dat`.
@@ -36,7 +36,7 @@ Encode `original.txt` and write table to `table.txt` and compressed data to `dat
 mvn compile exec:java -Dexec.mainClass=ch.fhnw.mada.Main -Dexec.args="encode -i original.txt -t table.txt -o data.dat"
 ```
 
-To ensure that the whole procedure is working we can decode `data.dat` again and expect to get the same text as the first time we decoded.
+To ensure that the whole procedure is working we can decode `data.dat` using `table.txt` and expect to get the same text as we encoded.
 ```shell
 mvn compile exec:java -Dexec.mainClass=ch.fhnw.mada.Main -Dexec.args="decode -o original2.txt -i data.dat -t table.txt"
 ```
