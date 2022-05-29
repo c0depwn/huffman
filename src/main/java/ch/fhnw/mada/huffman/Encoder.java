@@ -22,6 +22,9 @@ public class Encoder {
     private Path tableOutput;
     private Path compressedOutput;
 
+    private long initialSize = 0;
+    private long compressedSize = 0;
+
     public Encoder(Path dataSource, Path tableOutput, Path compressedOutput) {
         this.dataSource = dataSource;
         this.tableOutput = tableOutput;
@@ -95,6 +98,8 @@ public class Encoder {
 
     private Map<Character, Long> read(Path source) {
         try (var reader = Files.newBufferedReader(source)) {
+            this.initialSize = Files.size(source);
+
             // read each byte as char
             var characters = new ArrayList<Character>();
             int b;
@@ -122,7 +127,8 @@ public class Encoder {
                 if (idx < lastIndex) {
                     sb.append("-");
                 }
-                writer.write(sb.toString());
+                var toWrite = sb.toString();
+                writer.write(toWrite);
                 idx += 1;
             }
         } catch (IOException e) {
@@ -158,6 +164,7 @@ public class Encoder {
 
             // write to output
             var bits = bitString.toString();
+            this.compressedSize = bits.length() / 8;
             for (int i = 0; i < bits.length(); i += 8) {
                 var temp = Integer.parseInt(bits.substring(i, i + 8) ,2);
                 writer.write((byte) temp);
@@ -165,6 +172,14 @@ public class Encoder {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    public long getInitialSize() {
+        return initialSize;
+    }
+
+    public long getCompressedSize() {
+        return compressedSize;
     }
 }
 

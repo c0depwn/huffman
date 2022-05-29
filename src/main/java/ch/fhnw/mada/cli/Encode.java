@@ -22,11 +22,11 @@ public class Encode extends Command {
         var dataOutputPath = Path.of(dataOutput);
 
         if (!inputFilePath.toFile().exists()) {
-            System.out.println(inputFile + " does not exist!");
+            output.println(inputFile + " does not exist!");
             return;
         }
 
-        System.out.println("... encoding your file");
+        output.println("... encoding your file");
 
         var encoder = new Encoder(
             inputFilePath,
@@ -35,11 +35,18 @@ public class Encode extends Command {
         );
         encoder.encode();
 
-        System.out.printf(
+        output.printf(
             "...done!\n table stored in: %s\ncompressed data stored in: %s\n",
             tableOutputPath.toAbsolutePath(),
             dataOutputPath.toAbsolutePath()
         );
+
+        var compressed = encoder.getCompressedSize();
+        var original = encoder.getInitialSize();
+        var percentOfOriginal = ((float) compressed / (float) original * 100);
+        output.println("initial size (bytes):" + original);
+        output.println("compressed size (bytes):" + compressed);
+        output.println("saved space (bytes):" + (original - compressed) + " ~ " + percentOfOriginal + "% of the original size");
     }
 
     @Override
